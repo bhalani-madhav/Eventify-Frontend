@@ -1,6 +1,7 @@
 import React from "react";
 import FeatureItem from "./FeatureItem";
 import { Check } from "lucide-react";
+import { NavLink } from "react-router-dom";
 
 export default function Hero() {
   return (
@@ -30,20 +31,24 @@ export default function Hero() {
           </div>
           <div id="buttons" className="flex flex-col gap-4 flex-grow">
             <div className="flex flex-row text-lg items-center justify-between gap-5">
-              <button className="bg-primary-indigo text-white rounded-lg border-1 border-primary-indigo px-12 py-3.5  hover:text-primary-indigo hover:bg-white duration-150 flex-wrap flex-grow">
+              <NavLink
+                to="/register"
+                className="bg-primary-indigo text-center text-white rounded-lg border-1 border-primary-indigo px-12 py-3.5  hover:text-primary-indigo hover:bg-white duration-150 flex-wrap flex-grow"
+              >
                 Register
-              </button>
-              <button className="bg-white text-primary-indigo rounded-lg border-1 border-primary-indigo px-12 py-3.5  hover:text-white hover:bg-primary-indigo duration-150 flex-wrap flex-grow">
-                SignIn
-              </button>
+              </NavLink>
+              <NavLink
+                to="/sign-in"
+                className="bg-white text-center text-primary-indigo rounded-lg border-1 border-primary-indigo px-12 py-3.5  hover:text-white hover:bg-primary-indigo duration-150 flex-wrap flex-grow"
+              >
+                Sign In
+              </NavLink>
             </div>
             <div className="flex flex-row gap-2.5 text-subheading-gray items-center">
-              <span className="bg-[#caede3] p-0.5 rounded-full"> 
-              <Check size={12} color="#10B981" />
+              <span className="bg-[#caede3] p-0.5 rounded-full">
+                <Check size={12} color="#10B981" />
               </span>
-              <span className="text-xs">
-                Secure login & data protection.
-              </span>
+              <span className="text-xs">Secure login & data protection.</span>
             </div>
           </div>
         </div>
