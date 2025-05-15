@@ -7,7 +7,7 @@ export default function Sidebar() {
     <>
       <div
         id="sidebar"
-        className="bg-primary-navy text-gray h-dvh w-[300px]  flex flex-col justify-between pt-[38px] shadow-md"
+        className="bg-primary-navy text-gray h-dvh min-w-[300px]  flex flex-col justify-between pt-[38px] shadow-md"
       >
         <div id="upper" className=" gap-9 flex flex-col  px-[26px]">
           <div id="sidebar-header" className="flex flex-col gap-6 pl-2.5">
