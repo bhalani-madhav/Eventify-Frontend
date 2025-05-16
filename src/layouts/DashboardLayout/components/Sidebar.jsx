@@ -1,10 +1,42 @@
-import React, {useContext} from "react";
+import React, { useContext } from "react";
 import UserContext from "../../../context/User/UserContext";
 import { Bell, BellPlus, User, LogOut } from "lucide-react";
 import NavButton from "./NavButton";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 export default function Sidebar() {
-  const { username } = useContext(UserContext);
+  const { username, setIsLoggedIn } = useContext(UserContext);
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/logout",
+        {},
+        {
+          withCredentials: true,
+        }
+      );
+      if (response.status === 200) {
+        toast.success("Logging out..", {
+          hideProgressBar: false,
+          autoClose: 2000,
+        });
+        setIsLoggedIn(false);
+        setTimeout(() => {
+          navigate("/");
+        }, 2000);
+      }
+    } catch (err) {
+      console.log("ERROR WHILE SIGNING IN", err);
+      toast.error("Something went wrong!", {
+        hideProgressBar: false,
+        autoClose: 2000,
+      });
+    }
+  };
   return (
     <>
       <div
@@ -34,7 +66,10 @@ export default function Sidebar() {
           </div>
         </div>
         <div id="lower" className="border-t-[1px] border-[#eaf2ff10] text-lg">
-          <button className="flex flex-row items-center gap-[15px] pt-5 pb-[23px] px-9 hover:text-primary-indigo duration-150">
+          <button
+            onClick={handleLogout}
+            className="flex flex-row items-center gap-[15px] pt-5 pb-[23px] px-9 hover:text-primary-indigo duration-150"
+          >
             <LogOut />
             <span>Logout</span>
           </button>
