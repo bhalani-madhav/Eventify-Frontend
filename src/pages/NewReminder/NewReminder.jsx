@@ -1,14 +1,12 @@
 import React from "react";
 import { NavLink } from "react-router-dom";
 
-
-      export default function NewReminder() {
+export default function NewReminder() {
   return (
     <>
       <div class="flex items-center justify-center min-h-screen p-12">
         <div class="mx-auto w-full max-w-[550px]">
           <form
-            action="https://formbold.com/s/FORM_ID"
             method="POST"
             className="rounded-md shadow-md p-5 text-subheading-gray"
           >
