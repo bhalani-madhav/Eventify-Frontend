@@ -58,7 +58,8 @@ export default function Register() {
           autoClose: 2000,
         });
       } else {
-        toast.error(`${err.response.status}: ${err.response.data.message}`, {
+        console.log("ERROR WHILE SIGNING UP", err);
+        toast.error("Something went wrong!!", {
           hideProgressBar: false,
           autoClose: 2000,
         });
@@ -157,48 +158,48 @@ export default function Register() {
               />
             </div>
             {/* <div className="grid md:grid-cols-2 md:gap-5"> */}
-              <div className="mb-3">
-                <label
-                  htmlFor="password"
-                  className="block mb-2 text-sm text-subheading-gray"
-                >
-                  Create Password
-                </label>
-                <input
-                  type="password"
-                  id="password"
-                  name="password"
-                  value={formData.password}
-                  onChange={handleChange}
-                  minLength={8}
-                  required
-                  placeholder="Create a new password"
-                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-                  title="Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
-                  className="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
-                />
-              </div>
-              <div className="mb-3">
-                <label
-                  htmlFor="confirmPassword"
-                  className="block mb-2 text-sm text-subheading-gray"
-                >
-                  Confirm Password
-                </label>
-                <input
-                  type="password"
-                  id="confirmPassword"
-                  value={formData.confirmPassword}
-                  onChange={handleChange}
-                  minLength={8}
-                  name="confirmPassword"
-                  required
-                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
-                  title="Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
-                  placeholder="Enter the same password"
-                  className="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
-                />
-              </div>
+            <div className="mb-3">
+              <label
+                htmlFor="password"
+                className="block mb-2 text-sm text-subheading-gray"
+              >
+                Create Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                minLength={8}
+                required
+                placeholder="Create a new password"
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                title="Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+                className="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
+              />
+            </div>
+            <div className="mb-3">
+              <label
+                htmlFor="confirmPassword"
+                className="block mb-2 text-sm text-subheading-gray"
+              >
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="confirmPassword"
+                value={formData.confirmPassword}
+                onChange={handleChange}
+                minLength={8}
+                name="confirmPassword"
+                required
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                title="Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+                placeholder="Enter the same password"
+                className="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
+              />
+            </div>
             {/* </div> */}
             {/* <div className="mb-3">
               <p className="text-primary-indigo text-xs">

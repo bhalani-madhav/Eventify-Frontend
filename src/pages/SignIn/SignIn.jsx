@@ -1,7 +1,69 @@
-import React from "react";
+import React, { useState, useRef } from "react";
 import { NavLink } from "react-router-dom";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
+  const email = useRef(null);
+  const password = useRef(null);
+  const navigate = useNavigate();
+
+  // const [user, setUser] = useState({
+  //   email: "",
+  //   password: "",
+  // });
+
+  const handleSignIn = async (e) => {
+    e.preventDefault();
+    // setUser({
+    //   email: email.current.value,
+    //   password: password.current.value,
+    // });
+    try {
+      const response = await axios.post(
+        "http://localhost:3000/login",
+        { email: email.current.value, password: password.current.value },
+        {
+          withCredentials: true,
+
+        }
+      );
+      if (response.status === 200) {
+        toast.success("Logged in successfully!!", {
+          hideProgressBar: false,
+          autoClose: 2000,
+        });
+        setTimeout(() => {
+          navigate("/dashboard");
+        }, 2000);
+      }
+    } catch (err) {
+      if (err.response && err.response.status === 404) {
+        toast.error(err.response.data.message, {
+          hideProgressBar: false,
+          autoClose: 2000,
+        });
+      } else if (err.response && err.response.status === 401) {
+        toast.error(err.response.data.message, {
+          hideProgressBar: false,
+          autoClose: 2000,
+        });
+      } else if (err.response && err.response.status === 500) {
+        toast.error(err.response.data.message, {
+          hideProgressBar: false,
+          autoClose: 2000,
+        });
+      } else {
+        console.log("ERROR WHILE SIGNING IN", err);
+        toast.error("Something went wrong!", {
+          hideProgressBar: false,
+          autoClose: 2000,
+        });
+      }
+    }
+  };
+
   return (
     <>
       <div className="bg-white m-auto shadow-md rounded-lg p-10 flex flex-col gap-5 mt-[5%]">
@@ -26,33 +88,44 @@ export default function SignIn() {
             </div>
           </form> */}
 
-          <form class="max-w-sm mx-auto flex flex-col">
-            <div class="mb-5">
+          <form
+            className="max-w-sm mx-auto flex flex-col"
+            onSubmit={handleSignIn}
+          >
+            <div className="mb-5">
               <label
-                for="base-input"
-                class="block mb-2 text-sm text-subheading-gray"
+                htmlFor="base-input"
+                className="block mb-2 text-sm text-subheading-gray"
               >
                 Email
               </label>
               <input
                 type="text"
+                name="email"
+                ref={email}
                 id="base-input"
+                required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                title="Please enter a valid email address"
                 placeholder="you@example.com"
-                class="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
+                className="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
               />
             </div>
-            <div class="mb-5">
+            <div className="mb-5">
               <label
-                for="base-input"
-                class="block mb-2 text-sm text-subheading-gray"
+                htmlFor="base-input"
+                className="block mb-2 text-sm text-subheading-gray"
               >
                 Password
               </label>
               <input
                 type="password"
                 id="base-input"
+                required
+                ref={password}
+                name="password"
                 placeholder="Your password here"
-                class="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
+                className="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
               />
               <a className="text-xs text-primary-indigo underline">
                 Forgot Password?
@@ -61,7 +134,7 @@ export default function SignIn() {
             <div className="flex-grow">
               <button
                 type="submit"
-                class="text-white bg-primary-indigo hover:bg-[#443fa8] duration-150 rounded-lg w-full py-3.5 text-center"
+                className="text-white bg-primary-indigo hover:bg-[#443fa8] duration-150 rounded-lg w-full py-3.5 text-center"
               >
                 Sign In
               </button>
@@ -72,10 +145,13 @@ export default function SignIn() {
           <span className="text-[#6B7280] text-sm">or</span>
           <span className="text-[#6B7280]">
             <span>Don't have an account? </span>
-            <NavLink to="/register"><span className="text-primary-indigo">Sign Up</span></NavLink>
+            <NavLink to="/register">
+              <span className="text-primary-indigo">Sign Up</span>
+            </NavLink>
           </span>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 }
