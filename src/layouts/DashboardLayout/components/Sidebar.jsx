@@ -1,8 +1,10 @@
-import React from "react";
+import React, {useContext} from "react";
+import UserContext from "../../../context/User/UserContext";
 import { Bell, BellPlus, User, LogOut } from "lucide-react";
 import NavButton from "./NavButton";
 
 export default function Sidebar() {
+  const { username } = useContext(UserContext);
   return (
     <>
       <div
@@ -15,7 +17,7 @@ export default function Sidebar() {
             <p className="text-[16px]">
               Welcome,{" "}
               <span className="text-[18px] font-bold text-primary-indigo">
-                John Doe
+                {username}
               </span>
             </p>
           </div>

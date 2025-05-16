@@ -1,4 +1,5 @@
-import React, { useState, useRef } from "react";
+import React, { useRef, useContext } from "react";
+import UserContext from "../../context/User/UserContext";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
 import { ToastContainer, toast } from "react-toastify";
@@ -9,24 +10,16 @@ export default function SignIn() {
   const password = useRef(null);
   const navigate = useNavigate();
 
-  // const [user, setUser] = useState({
-  //   email: "",
-  //   password: "",
-  // });
+  const {setUsername} = useContext(UserContext);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
-    // setUser({
-    //   email: email.current.value,
-    //   password: password.current.value,
-    // });
     try {
       const response = await axios.post(
         "http://localhost:3000/login",
         { email: email.current.value, password: password.current.value },
         {
           withCredentials: true,
-
         }
       );
       if (response.status === 200) {
@@ -34,6 +27,7 @@ export default function SignIn() {
           hideProgressBar: false,
           autoClose: 2000,
         });
+        setUsername(response.data.firstName + " " + response.data.lastName);
         setTimeout(() => {
           navigate("/dashboard");
         }, 2000);
@@ -103,7 +97,7 @@ export default function SignIn() {
                 type="text"
                 name="email"
                 ref={email}
-                id="base-input"
+                id="email"
                 required
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 title="Please enter a valid email address"
@@ -120,7 +114,7 @@ export default function SignIn() {
               </label>
               <input
                 type="password"
-                id="base-input"
+                id="password"
                 required
                 ref={password}
                 name="password"

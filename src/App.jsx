@@ -1,8 +1,11 @@
-import Landing from "./pages/Landing/Landing";
+import LandingLayout from "./layouts/LandingLayout/LandingLayout";
 
-function App() {
-  return <>
-  </>;
+function App({children}) {
+  return (
+    <>
+      {children}
+    </>
+  );
 }
 
 export default App;

@@ -4,11 +4,19 @@ import "./index.css";
 import App from "./App.jsx";
 import { RouterProvider } from "react-router-dom";
 import { Routes } from "./routes/Router.jsx";
+import UserContextProvider from "./context/User/UserContextProvider.jsx";
+import DashboardLayout from "./layouts/DashboardLayout/DashboardLayout.jsx";
+import LandingLayout from "./layouts/LandingLayout/LandingLayout.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
-    <RouterProvider router={Routes}>
-      <App />
-    </RouterProvider>
+    <UserContextProvider>
+      <RouterProvider router={Routes}>
+        <App>
+          <LandingLayout></LandingLayout>
+          <DashboardLayout></DashboardLayout>
+        </App>
+      </RouterProvider>
+    </UserContextProvider>
   </StrictMode>
 );
