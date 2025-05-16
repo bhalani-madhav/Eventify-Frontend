@@ -5,6 +5,8 @@ import LandingLayout from "../layouts/LandingLayout/LandingLayout";
 import SignIn from "../pages/SignIn/SignIn";
 import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 import Reminders from "../pages/Reminders/Reminders";
+import NewReminder from "../pages/NewReminder/NewReminder";
+import EditReminder from "../pages/EditReminder/EditReminder";
 
 export const Routes = createBrowserRouter([
   {
@@ -27,10 +29,20 @@ export const Routes = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout/>,
-    children: [{
-      path: "/dashboard",
-      element: <Reminders/>
-    }]
-  }
+    element: <DashboardLayout />,
+    children: [
+      {
+        path: "/dashboard",
+        element: <Reminders />,
+      },
+      {
+        path: "/dashboard/new-reminder",
+        element: <NewReminder />,
+      },
+      {
+        path: "/dashboard/edit-reminder",
+        element: <EditReminder />,
+      },
+    ],
+  },
 ]);

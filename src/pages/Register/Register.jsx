@@ -39,6 +39,9 @@ export default function Register() {
                   type="text"
                   id="base-input"
                   placeholder="First Name"
+                  pattern="^[A-Za-z]+$"
+                  required
+                  title="First name should only contain letters."
                   class="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
                 />
               </div>
@@ -53,6 +56,9 @@ export default function Register() {
                   type="text"
                   id="base-input"
                   placeholder="Last Name"
+                  pattern="^[A-Za-z]+$"
+                  required
+                  title="First name should only contain letters."
                   class="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
                 />
               </div>
@@ -65,9 +71,12 @@ export default function Register() {
                 Email
               </label>
               <input
-                type="text"
+                type="email"
                 id="base-input"
                 placeholder="you@example.com"
+                required
+                pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
+                title="Please enter a valid email address"
                 class="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
               />
             </div>
@@ -82,8 +91,12 @@ export default function Register() {
                 <input
                   type="password"
                   id="base-input"
+                  minLength={8}
+                  required
                   placeholder="Create a new password"
-                  class="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                  title="Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
+                  class="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
                 />
               </div>
               <div class="mb-5">
@@ -96,6 +109,10 @@ export default function Register() {
                 <input
                   type="password"
                   id="base-input"
+                  minLength={8}
+                  required
+                  pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                  title="Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
                   placeholder="Enter the same password"
                   class="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
                 />
@@ -115,7 +132,9 @@ export default function Register() {
           <span className="text-[#6B7280] text-sm">or</span>
           <span className="text-[#6B7280]">
             <span>Already have an account? </span>
-            <NavLink to="/sign-in"><span className="text-primary-indigo">Sign In</span></NavLink>
+            <NavLink to="/sign-in">
+              <span className="text-primary-indigo">Sign In</span>
+            </NavLink>
           </span>
         </div>
       </div>

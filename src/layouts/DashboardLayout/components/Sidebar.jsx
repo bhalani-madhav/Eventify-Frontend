@@ -23,7 +23,7 @@ export default function Sidebar() {
             <NavButton title="Reminders" link="/dashboard">
               <Bell />
             </NavButton>
-            <NavButton title="New Reminder" link="/">
+            <NavButton title="New Reminder" link="/dashboard/new-reminder">
               <BellPlus />
             </NavButton>
             <NavButton title="Your Profile" link="/">
