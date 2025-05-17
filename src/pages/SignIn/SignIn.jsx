@@ -2,7 +2,7 @@ import React, { useRef, useContext } from "react";
 import UserContext from "../../context/User/UserContext";
 import { NavLink } from "react-router-dom";
 import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 
 export default function SignIn() {
@@ -10,7 +10,7 @@ export default function SignIn() {
   const password = useRef(null);
   const navigate = useNavigate();
 
-  const {setUsername} = useContext(UserContext);
+  const { setUsername } = useContext(UserContext);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -28,9 +28,8 @@ export default function SignIn() {
           autoClose: 2000,
         });
         setUsername(response.data.firstName + " " + response.data.lastName);
-        setTimeout(() => {
-          navigate("/dashboard");
-        }, 2000);
+
+        navigate("/dashboard");
       }
     } catch (err) {
       if (err.response && err.response.status === 404) {
@@ -145,7 +144,6 @@ export default function SignIn() {
           </span>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 }

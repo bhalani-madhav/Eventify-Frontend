@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { NavLink, redirect, useNavigate } from "react-router-dom";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 import axios from "axios";
 
 export default function Register() {
@@ -41,9 +41,8 @@ export default function Register() {
             hideProgressBar: false,
             autoClose: 2000,
           });
-          setTimeout(() => {
-            navigate("/sign-in");
-          }, 2000);
+
+          navigate("/sign-in");
         }
       }
     } catch (err) {
@@ -226,7 +225,6 @@ export default function Register() {
           </span>
         </div>
       </div>
-      <ToastContainer />
     </>
   );
 }
