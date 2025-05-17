@@ -20,14 +20,11 @@ export default function Sidebar() {
         }
       );
       if (response.status === 200) {
-        toast.success("Logging out..", {
+        toast.success("Logged out successfully..", {
           hideProgressBar: false,
           autoClose: 2000,
         });
         setIsLoggedIn(false);
-        setTimeout(() => {
-          navigate("/");
-        }, 2000);
       }
     } catch (err) {
       console.log("ERROR WHILE SIGNING IN", err);

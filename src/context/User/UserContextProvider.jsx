@@ -20,6 +20,7 @@ export default function UserContextProvider({ children }) {
           setIsLoggedIn(true);
         } else {
           setIsLoggedIn(false);
+
         }
       } catch (error) {
         setIsLoggedIn(false);
@@ -38,5 +39,5 @@ export default function UserContextProvider({ children }) {
     >
       {children}
     </UserContext.Provider>
-  );  
+  );
 }
