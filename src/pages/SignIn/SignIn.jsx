@@ -10,7 +10,7 @@ export default function SignIn() {
   const password = useRef(null);
   const navigate = useNavigate();
 
-  const { setUsername } = useContext(UserContext);
+  const { setUsername, setIsLoggedIn } = useContext(UserContext);
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -28,7 +28,7 @@ export default function SignIn() {
           autoClose: 2000,
         });
         setUsername(response.data.firstName + " " + response.data.lastName);
-
+        setIsLoggedIn(true);
         navigate("/dashboard");
       }
     } catch (err) {

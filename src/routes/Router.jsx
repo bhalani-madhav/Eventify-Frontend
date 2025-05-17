@@ -7,6 +7,7 @@ import DashboardLayout from "../layouts/DashboardLayout/DashboardLayout";
 import Reminders from "../pages/Reminders/Reminders";
 import NewReminder from "../pages/NewReminder/NewReminder";
 import EditReminder from "../pages/EditReminder/EditReminder";
+import ProtectedRoute from "./ProtectedRoute";
 
 export const Routes = createBrowserRouter([
   {
@@ -29,7 +30,11 @@ export const Routes = createBrowserRouter([
   },
   {
     path: "/dashboard",
-    element: <DashboardLayout />,
+    element: (
+      <ProtectedRoute>
+        <DashboardLayout />
+      </ProtectedRoute>
+    ),
     children: [
       {
         path: "/dashboard",
