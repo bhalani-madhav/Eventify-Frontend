@@ -13,6 +13,7 @@ export default function ListItem({
   time,
   creaytedAt,
   updatedAt,
+  onDelete,
 }) {
   return (
     <>
@@ -55,7 +56,10 @@ export default function ListItem({
             </span>
             <span>Edit</span>
           </Link>
-          <button className="flex flex-row gap-1.5 items-center hover:border-red-600 max-w-[100px] text-sm hover:bg-red-600 hover:text-red-100  border-1 duration-150  text-red-600 bg-red-100 border-red-100 rounded-lg px-2.5">
+          <button
+            onClick={onDelete}
+            className="flex flex-row gap-1.5 items-center hover:border-red-600 max-w-[100px] text-sm hover:bg-red-600 hover:text-red-100  border-1 duration-150  text-red-600 bg-red-100 border-red-100 rounded-lg px-2.5"
+          >
             <span>
               <Trash size={14} />
             </span>

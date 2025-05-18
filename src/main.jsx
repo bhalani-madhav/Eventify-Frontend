@@ -8,6 +8,7 @@ import UserContextProvider from "./context/User/UserContextProvider.jsx";
 import DashboardLayout from "./layouts/DashboardLayout/DashboardLayout.jsx";
 import LandingLayout from "./layouts/LandingLayout/LandingLayout.jsx";
 import { ToastContainer } from "react-toastify";
+import ReminderContextProvider from "./context/Reminder/ReminderContextProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
@@ -15,7 +16,9 @@ createRoot(document.getElementById("root")).render(
       <RouterProvider router={Routes}>
         <App>
           <LandingLayout></LandingLayout>
-          <DashboardLayout></DashboardLayout>
+         
+            <DashboardLayout></DashboardLayout>
+         
         </App>
       </RouterProvider>
       <ToastContainer />

@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import SearchInput from "./components/SearchInput";
 import ListItem from "./components/ListItem";
 import { fetchReminders } from "../../services/ReminderServices";
+import DeleteModal from "./components/DeleteModal";
+import ReminderContext from "../../context/Reminder/ReminderContext";
 
 export default function Reminders() {
   const [pageParams, setPageParams] = useSearchParams();
@@ -10,6 +12,19 @@ export default function Reminders() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [maxPage, setMaxPage] = useState(1);
+
+  const {
+    showDelete,
+    setShowDelete,
+    setSelectedReminder,
+    handleCloseModal,
+    selectedReminder,
+  } = useContext(ReminderContext);
+  // Handler to open modal
+  const handleDeleteClick = (reminder) => {
+    setSelectedReminder(reminder);
+    setShowDelete(true);
+  };
 
   const pageNo = parseInt(pageParams.get("page")) || 1;
 
@@ -61,10 +76,26 @@ export default function Reminders() {
                 time={newDate.toLocaleTimeString()}
                 creaytedAt={createdAt.toLocaleDateString()}
                 updatedAt={updatedAt.toLocaleDateString()}
+                onDelete={() => handleDeleteClick(reminder)}
               />
             );
           })}
         </div>
+        {/* Render DeleteModal */}
+        {showDelete && (
+          <DeleteModal
+            onClose={() => {
+              handleCloseModal();
+              fetchReminders(
+                setReminders,
+                setLoading,
+                setError,
+                pageNo,
+                setMaxPage
+              );
+            }}
+          />
+        )}
         <div id="pagination" className="flex flex-row justify-between">
           <button
             onClick={() => {
