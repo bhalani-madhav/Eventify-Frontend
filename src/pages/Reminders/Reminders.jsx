@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
 import SearchInput from "./components/SearchInput";
 import ListItem from "./components/ListItem";
-import fetchReminders from "../../services/ReminderServices";
+import { fetchReminders } from "../../services/ReminderServices";
 
 export default function Reminders() {
+  const [pageParams, setPageParams] = useSearchParams();
   const [reminders, setReminders] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const [maxPage, setMaxPage] = useState(null);
+  const [maxPage, setMaxPage] = useState(1);
 
-  const [pageNo, setPageNo] = useState(1);
+  const pageNo = parseInt(pageParams.get("page")) || 1;
 
   useEffect(() => {
     fetchReminders(setReminders, setLoading, setError, pageNo, setMaxPage);
+
     console.log("HG reminders", reminders);
   }, [pageNo]);
 
@@ -46,10 +49,18 @@ export default function Reminders() {
         </div>
         <div id="list" className="flex flex-col flex-wrap">
           {reminders.map((reminder) => {
+            const newDate = new Date(reminder.date);
+            const createdAt = new Date(reminder.createdAt);
+            const updatedAt = new Date(reminder.updatedAt);
             return (
               <ListItem
+                id={reminder.id}
                 title={reminder.title}
                 description={reminder.description}
+                date={newDate.toLocaleDateString()}
+                time={newDate.toLocaleTimeString()}
+                creaytedAt={createdAt.toLocaleDateString()}
+                updatedAt={updatedAt.toLocaleDateString()}
               />
             );
           })}
@@ -57,18 +68,18 @@ export default function Reminders() {
         <div id="pagination" className="flex flex-row justify-between">
           <button
             onClick={() => {
-              setPageNo((prev) => prev - 1);
+              setPageParams({ page: pageNo - 1 });
             }}
-            className={`px-9 py-4 border-[#E0E7FF] border-1  text-primary-indigo duration-150 max-w-[150px] hover:bg-primary-indigo  hover:text-white bg-[#E0E7FF] hover:border-primary-indigo rounded-lg  flex-grow`}
+            className={`disabled:cursor-not-allowed px-9 py-4 border-[#E0E7FF] border-1  text-primary-indigo duration-150 max-w-[150px] hover:bg-primary-indigo  hover:text-white bg-[#E0E7FF] hover:border-primary-indigo rounded-lg  flex-grow`}
             disabled={pageNo === 1}
           >
             Previous
           </button>
           <button
             onClick={() => {
-              setPageNo((prev) => prev + 1);
+              setPageParams({ page: pageNo + 1 });
             }}
-            className={`px-9 py-4 border-[#E0E7FF] border-1  text-primary-indigo duration-150 max-w-[150px] hover:bg-primary-indigo  hover:text-white bg-[#E0E7FF] hover:border-primary-indigo rounded-lg  flex-grow `}
+            className={`disabled:cursor-not-allowed px-9 py-4 border-[#E0E7FF] border-1  text-primary-indigo duration-150 max-w-[150px] hover:bg-primary-indigo  hover:text-white bg-[#E0E7FF] hover:border-primary-indigo rounded-lg  flex-grow `}
             disabled={pageNo === maxPage}
           >
             Next

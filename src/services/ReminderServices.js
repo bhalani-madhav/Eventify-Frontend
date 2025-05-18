@@ -1,5 +1,8 @@
 import axios from "axios";
-const fetchReminders = async (
+import dateTimeFormatter from "../utils/dateTimeFormatter";
+
+//function to handle api call to fetch all reminders
+export const fetchReminders = async (
   setReminders,
   setLoading,
   setError,
@@ -27,4 +30,33 @@ const fetchReminders = async (
   }
 };
 
-export default fetchReminders;
+//function to handle api call to fetch single reminder by ID
+export const fetchReminderById = async (
+  setReminder,
+  setLoading,
+  setError,
+  reminderId
+) => {
+  try {
+    setLoading(true);
+    const response = await axios.get(
+      `http://localhost:3000/reminder/${reminderId}`,
+      { withCredentials: true }
+    );
+    if (response.data && typeof response.data.reminder === "object") {
+      const reminder = response.data.reminder;
+      const formattedReminder = {
+        ...reminder,
+        date: reminder.date ? dateTimeFormatter(new Date(reminder.date)) : "",
+      };
+      setReminder(formattedReminder);
+      console.log(response.data);
+    } else {
+      throw new Error("Invalid response data");
+    }
+  } catch (err) {
+    setError(err.message || "Failed to fetch reminder");
+  } finally {
+    setLoading(false);
+  }
+};

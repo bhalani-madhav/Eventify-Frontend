@@ -5,7 +5,15 @@ import { CalendarDays } from "lucide-react";
 import { Clock } from "lucide-react";
 import { Link } from "react-router-dom";
 
-export default function ListItem({ title, description }) {
+export default function ListItem({
+  id,
+  title,
+  description,
+  date,
+  time,
+  creaytedAt,
+  updatedAt,
+}) {
   return (
     <>
       <div className="flex flex-row px-3 py-6 rounded-lg shadow-md justify-between">
@@ -21,25 +29,25 @@ export default function ListItem({ title, description }) {
           <div className="text-primary-indigo flex flex-row gap-2 items-center">
             <div className="flex flex-row items-center gap-1.5">
               <CalendarDays size={16} strokeWidth={3} />
-              <span className="italic text-sm">20-04-2025</span>
+              <span className="italic text-sm">{date}</span>
             </div>
             <div className="flex flex-row items-center gap-1.5">
               <Clock size={16} strokeWidth={3} />
-              <span className="italic text-sm">10:00 AM</span>
+              <span className="italic text-sm">{time}</span>
             </div>
           </div>
           <div className="text-subheading-gray flex flex-row gap-2 items-center text-xs">
             <div className="flex flex-row items-center gap-1.5">
-              <span className="italic">Created at: 18-04-2025</span>
+              <span className="italic">Created at: {creaytedAt}</span>
             </div>
             <div className="flex flex-row items-center gap-1.5">
-              <span className="italic">Last updated: 20minutes ago</span>
+              <span className="italic">Last updated: {updatedAt}</span>
             </div>
           </div>
         </div>
         <div className="flex flex-col justify-between items-center">
           <Link
-            to="/dashboard/edit-reminder"
+            to={`/dashboard/edit-reminder/${id}`}
             className="flex flex-row gap-1.5 items-center hover:border-primary-indigo max-w-[100px] text-sm hover:bg-primary-indigo hover:text-white  border-1 duration-150  text-primary-indigo bg-[#E0E7FF] border-[#E0E7FF] rounded-lg  px-2.5"
           >
             <span>

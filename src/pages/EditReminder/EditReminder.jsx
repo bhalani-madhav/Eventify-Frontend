@@ -1,66 +1,207 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
+import { fetchReminderById } from "../../services/ReminderServices";
+import { toast } from "react-toastify";
+import axios from "axios";
 
 export default function EditReminder() {
+  const navigate = useNavigate();
+  const { reminderId } = useParams();
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState(null);
+
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    date: "",
+  });
+  const [invalidTitle, setInvalidTitle] = useState(false);
+  const [invalidDescription, setInvalidDescription] = useState(false);
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prevFormData) => {
+      // Check for title length if the field is 'title'
+      if (name === "title") {
+        setInvalidTitle(value.length > 100);
+      }
+      if (name === "description") {
+        setInvalidDescription(value.length > 500);
+      }
+      return { ...prevFormData, [name]: value };
+    });
+  };
+
+  useEffect(() => {
+    if (reminderId) {
+      fetchReminderById(setFormData, setLoading, setError, reminderId);
+    }
+  }, [reminderId]);
+
+  const handleEditReminder = async (e) => {
+    e.preventDefault();
+    try {
+      const response = await axios.put(
+        `http://localhost:3000/reminder/${reminderId}`,
+        formData,
+        { withCredentials: true }
+      );
+      if (response.status === 200) {
+        toast.success("Reminder updated successfully!!", {
+          hideProgressBar: false,
+          autoClose: 2000,
+        });
+        navigate("/dashboard");
+      }
+    } catch (err) {
+      if (err.response && err.response.status === 401) {
+        toast.error(err.response.data.message, {
+          hideProgressBar: false,
+          autoClose: 2000,
+        });
+      } else if (err.response && err.response.status === 400) {
+        toast.error(err.response.data.message, {
+          hideProgressBar: false,
+          autoClose: 2000,
+        });
+      } else if (err.response && err.response.status === 404) {
+        toast.error(err.response.data.message, {
+          hideProgressBar: false,
+          autoClose: 2000,
+        });
+      } else if (err.response && err.response.status === 500) {
+        toast.error(err.response.data.message, {
+          hideProgressBar: false,
+          autoClose: 2000,
+        });
+      } else {
+        console.log("ERROR WHILE EDITING REMINDER", err);
+        toast.error("Failed to edit reminder!!", {
+          hideProgressBar: false,
+          autoClose: 2000,
+        });
+      }
+    }
+  };
+
+  if (loading) return <h1>Loading...</h1>;
+  if (error) return <h1>{error}</h1>;
   return (
     <>
-      <div class="flex items-center justify-center min-h-screen p-12">
-        <div class="mx-auto w-full max-w-[550px]">
+      <div className="flex items-center justify-center min-h-screen p-12">
+        <div className="mx-auto w-full max-w-[550px]">
           <form
-            method="POST"
+            onSubmit={handleEditReminder}
             className="rounded-md shadow-md p-5 text-subheading-gray"
           >
-            <h1 class="mb-5 text-center text-2xl font-bold text-gray">
+            <h1 className="mb-5 text-center text-2xl font-bold text-gray">
               Edit Reminder
             </h1>
-            <div class="mb-5">
-              <label for="title" class="mb-3 block">
+            <div className="mb-5">
+              <label htmlFor="title" className="mb-3 block">
                 Title
               </label>
               <input
                 type="text"
+                name="title"
+                onChange={handleChange}
+                value={formData.title}
                 placeholder="Event title"
-                class="text-sm w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 outline-none focus:border-primary-indigo focus:shadow-md"
+                onInvalid={(e) =>
+                  e.target.setCustomValidity("Title cannot be empty!!")
+                }
+                onInput={(e) => e.target.setCustomValidity("")}
+                required
+                class={`text-sm w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 outline-none focus:border-primary-indigo focus:shadow-md ${
+                  invalidTitle ? "focus:border-red-600" : ""
+                }`}
               />
+              {invalidTitle ? (
+                <p className="text-red-600 text-sm">
+                  Title must be between 0 to 100 characters.
+                </p>
+              ) : (
+                ""
+              )}
             </div>
-            <div class="mb-5">
-              <label for="description" class="mb-3 block">
+            <div className="mb-5">
+              <label htmlFor="description" className="mb-3 block">
                 Description
               </label>
               <textarea
+                name="description"
+                onChange={handleChange}
                 placeholder="Event description"
-                class="text-sm w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 outline-none focus:border-primary-indigo focus:shadow-md"
+                onInvalid={(e) =>
+                  e.target.setCustomValidity("Description cannot be empty!!")
+                }
+                onInput={(e) => e.target.setCustomValidity("")}
+                required
+                value={formData.description}
+                class={` ${
+                  invalidDescription ? "focus:border-red-600" : ""
+                } text-sm w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 outline-none focus:border-primary-indigo focus:shadow-md`}
               ></textarea>
+              {invalidDescription ? (
+                <p className="text-red-600 text-sm">
+                  Description must be between 0 to 500 characters.
+                </p>
+              ) : (
+                ""
+              )}
             </div>
-            <div class="-mx-3 flex flex-wrap">
-              <div class="w-full px-3 sm:w-1/2">
-                <div class="mb-5">
-                  <label for="date" class="mb-3 block">
+            {/* <div className="-mx-3 flex flex-wrap">
+              <div className="w-full px-3 sm:w-1/2">
+                <div className="mb-5">
+                  <label htmlFor="date" className="mb-3 block">
                     Date
                   </label>
                   <input
                     type="date"
                     name="date"
                     id="date"
-                    class="w-full text-sm rounded-md border border-[#e0e0e0] bg-white py-3 px-6 outline-none focus:border-primary-indigo focus:shadow-md"
+                    className="w-full text-sm rounded-md border border-[#e0e0e0] bg-white py-3 px-6 outline-none focus:border-primary-indigo focus:shadow-md"
                   />
                 </div>
               </div>
-              <div class="w-full px-3 sm:w-1/2">
-                <div class="mb-5">
-                  <label for="time" class="mb-3 block">
+              <div className="w-full px-3 sm:w-1/2">
+                <div className="mb-5">
+                  <label htmlFor="time" className="mb-3 block">
                     Time
                   </label>
                   <input
                     type="time"
                     name="time"
                     id="time"
-                    class="w-full text-sm rounded-md border border-[#e0e0e0] bg-white py-3 px-6 outline-none focus:border-primary-indigo focus:shadow-md"
+                    className="w-full text-sm rounded-md border border-[#e0e0e0] bg-white py-3 px-6 outline-none focus:border-primary-indigo focus:shadow-md"
                   />
                 </div>
               </div>
+            </div> */}
+            <div className="mb-5">
+              <label htmlFor="title" className="mb-3 block">
+                Date & Time
+              </label>
+              <input
+                type="datetime-local"
+                name="date"
+                onChange={handleChange}
+                value={formData.date}
+                onInvalid={(e) =>
+                  e.target.setCustomValidity(
+                    "Please specify the date and time!!"
+                  )
+                }
+                onInput={(e) => e.target.setCustomValidity("")}
+                required
+                className="text-sm w-full appearance-none rounded-md border border-[#e0e0e0] bg-white py-3 px-6 outline-none focus:border-primary-indigo focus:shadow-md"
+              />
             </div>
             <div>
-              <button class="hover:shadow-form w-[100%] rounded-md bg-primary-indigo py-3 px-8 text-center font-semibold text-white outline-none">
+              <button
+                type="submit"
+                className="hover:shadow-form w-[100%] rounded-md bg-primary-indigo py-3 px-8 text-center font-semibold text-white outline-none"
+              >
                 Save Changes
               </button>
             </div>

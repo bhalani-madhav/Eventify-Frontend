@@ -45,7 +45,7 @@ export const Routes = createBrowserRouter([
         element: <NewReminder />,
       },
       {
-        path: "/dashboard/edit-reminder",
+        path: "/dashboard/edit-reminder/:reminderId",
         element: <EditReminder />,
       },
     ],
