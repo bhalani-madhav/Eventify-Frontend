@@ -1,4 +1,3 @@
-
 # Eventify – Frontend
 
 This is the frontend of **Eventify**, a modern event management platform. Built using **React** and **Vite** for fast development and optimized performance.
@@ -11,6 +10,7 @@ This is the frontend of **Eventify**, a modern event management platform. Built 
 - [Vite](https://vitejs.dev/)
 - [JavaScript](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 - [Node.js](https://nodejs.org/)
+- [Tailwind](tailwindcss.com/docs/)
 
 ---
 
@@ -43,11 +43,10 @@ The app will be available at [http://localhost:5173](http://localhost:5173)
 
 ---
 
-
 ## 💡 Notes
 
-* No `.env` file is required for this setup.
-* Ensure ports `5173` or `3000` are free or change it in the `vite.config.js`.
+- No `.env` file is required for this setup.
+- Ensure ports `5173` or `3000` are free or change it in the `vite.config.js`.
 
 ---
 
@@ -56,6 +55,3 @@ The app will be available at [http://localhost:5173](http://localhost:5173)
 If you find a bug or have suggestions, feel free to open an issue or pull request.
 
 ---
-
-
-
