@@ -23,7 +23,7 @@ Follow the steps below to set up and run the project locally.
 ```bash
 git clone https://github.com/bhalani-madhav/Eventify-Frontend.git
 cd Eventify-Frontend
-
+```
 
 ### 2. Install Dependencies
 
