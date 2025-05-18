@@ -1,5 +1,4 @@
 import React, { useContext } from "react";
-import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast } from "react-toastify";
 import ReminderContext from "../../../context/Reminder/ReminderContext";
@@ -7,7 +6,6 @@ import ReminderContext from "../../../context/Reminder/ReminderContext";
 export default function DeleteModal({ onClose }) {
   const { handleCloseModal, selectedReminder } = useContext(ReminderContext);
 
-  const navigate = useNavigate();
   const handleDelete = async (reminderId) => {
     try {
       const response = await axios.delete(
@@ -20,7 +18,6 @@ export default function DeleteModal({ onClose }) {
           autoClose: 2000,
         });
         onClose();
-        // navigate("/dashboard");
       }
     } catch (err) {
       if (err.response && err.response.status === 404) {
@@ -50,8 +47,14 @@ export default function DeleteModal({ onClose }) {
 
   return (
     <>
+      {/* Background overlay with opacity */}
       <div
-        className="fixed inset-0 z-50 flex items-center justify-center bg-white opacity-70"
+        className="fixed inset-0 z-40 bg-[#E0E7FF] opacity-70"
+        aria-hidden="true"
+      ></div>
+      {/* Modal dialog */}
+      <div
+        className="fixed inset-0 z-50 flex items-center justify-center"
         aria-modal="true"
         role="dialog"
       >
@@ -64,47 +67,48 @@ export default function DeleteModal({ onClose }) {
             >
               <svg
                 aria-hidden="true"
-                class="w-5 h-5"
+                className="w-5 h-5"
                 fill="currentColor"
                 viewBox="0 0 20 20"
                 xmlns="http://www.w3.org/2000/svg"
               >
                 <path
-                  fill-rule="evenodd"
+                  fillRule="evenodd"
                   d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z"
-                  clip-rule="evenodd"
+                  clipRule="evenodd"
                 ></path>
               </svg>
-              <span class="sr-only">Close modal</span>
+              <span className="sr-only">Close modal</span>
             </button>
             <svg
-              class="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto"
+              className="text-gray-400 dark:text-gray-500 w-11 h-11 mb-3.5 mx-auto"
               aria-hidden="true"
               fill="currentColor"
               viewBox="0 0 20 20"
               xmlns="http://www.w3.org/2000/svg"
             >
               <path
-                fill-rule="evenodd"
+                fillRule="evenodd"
                 d="M9 2a1 1 0 00-.894.553L7.382 4H4a1 1 0 000 2v10a2 2 0 002 2h8a2 2 0 002-2V6a1 1 0 100-2h-3.382l-.724-1.447A1 1 0 0011 2H9zM7 8a1 1 0 012 0v6a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v6a1 1 0 102 0V8a1 1 0 00-1-1z"
-                clip-rule="evenodd"
+                clipRule="evenodd"
               ></path>
             </svg>
-            <p className="mb-4 text-gray-500 dark:text-gray-300">
-              Are you sure you want to delete <b>{selectedReminder?.title}</b>?
+            <p className="mb-4 text-gray text-sm">
+              Are you sure you want to delete{" "}
+              <i className="text-primary-indigo">{selectedReminder?.title}</i>?
             </p>
-            <div class="flex justify-center items-center space-x-4">
+            <div className="flex justify-center items-center space-x-4">
               <button
                 onClick={onClose}
                 type="button"
-                class="py-2 px-3 text-sm font-medium text-gray-500 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-primary-300 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600"
+                className="py-2 px-3 text-sm font-medium text-primary-indigo bg-[#E0E7FF] rounded-lg border border-[#E0E7FF] hover:bg-primary-indigo hover:border-primary-indigo focus:outline-none hover:text-[#E0E7FF] focus:z-10 duration-150"
               >
                 No, cancel
               </button>
               <button
                 type="submit"
                 onClick={() => handleDelete(selectedReminder?.id)}
-                class="py-2 px-3 text-sm font-medium text-center text-white bg-red-600 rounded-lg hover:bg-red-700 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-500 dark:hover:bg-red-600 dark:focus:ring-red-900"
+                className="py-2 px-3 text-sm font-medium text-center text-red-100 bg-red-600 rounded-lg hover:bg-red-100 hover:text-red-600   duration-150"
               >
                 Yes, I'm sure
               </button>

@@ -5,6 +5,9 @@ import ListItem from "./components/ListItem";
 import { fetchReminders } from "../../services/ReminderServices";
 import DeleteModal from "./components/DeleteModal";
 import ReminderContext from "../../context/Reminder/ReminderContext";
+import LoaderIcon from "../LoaderIcon";
+import NoReminders from "../Errors/NoReminders";
+import ServerError from "../Errors/ServerError";
 
 export default function Reminders() {
   const [pageParams, setPageParams] = useSearchParams();
@@ -18,7 +21,9 @@ export default function Reminders() {
     setShowDelete,
     setSelectedReminder,
     handleCloseModal,
-    selectedReminder,
+    showCompleted,
+    handleShowCompleted,
+    handleShowAll,
   } = useContext(ReminderContext);
   // Handler to open modal
   const handleDeleteClick = (reminder) => {
@@ -34,8 +39,8 @@ export default function Reminders() {
     console.log("HG reminders", reminders);
   }, [pageNo]);
 
-  if (loading) return <h1>Loading...</h1>;
-  if (error) return <h1>{error}</h1>;
+  if (loading) return <LoaderIcon />;
+  if (error) return <ServerError />;
 
   return (
     <>
@@ -44,31 +49,56 @@ export default function Reminders() {
           <div className="flex-grow">
             <span className="font-bold text-3xl">Your Reminders</span>
           </div>
-          <div className="flex flex-row justify-evenly gap-40  items-center flex-grow">
-            <SearchInput />
-            <div
-              id="filter"
-              className="flex flex-grow flex-row flex-wrap gap-4 items-center"
+          {/* <div className="flex flex-row justify-evenly gap-40  items-center flex-grow">
+            <SearchInput /> */}
+          <div
+            id="filter"
+            className="flex flex-grow flex-row flex-wrap gap-4 items-center"
+          >
+            <button
+              onClick={handleShowAll}
+              className={`px-9 py-4 border-[#D1D5DB] border-1  text-gray duration-150   rounded-lg  flex-grow ${
+                !showCompleted
+                  ? "border-primary-indigo bg-primary-indigo text-white"
+                  : "hover:text-primary-indigo hover:bg-[#E0E7FF] hover:border-[#E0E7FF]"
+              }`}
             >
-              <button className="px-9 py-4 border-primary-indigo border-1 bg-primary-indigo  duration-150 text-white   rounded-lg  flex-grow">
-                All Reminders
-              </button>
-              {/* <button className="px-9 py-4 border-[#D1D5DB] border-1  text-gray duration-150  hover:text-primary-indigo hover:bg-[#E0E7FF] hover:border-[#E0E7FF] rounded-lg  flex-grow">
+              All Reminders
+            </button>
+            {/* <button className="px-9 py-4 border-[#D1D5DB] border-1  text-gray duration-150  hover:text-primary-indigo hover:bg-[#E0E7FF] hover:border-[#E0E7FF] rounded-lg  flex-grow">
                 All Reminders
               </button> */}
-              <button className="px-9 py-4 border-[#D1D5DB] border-1  text-gray duration-150  hover:text-primary-indigo hover:bg-[#E0E7FF] hover:border-[#E0E7FF] rounded-lg  flex-grow">
-                Completed
-              </button>
-            </div>
+            <button
+              onClick={handleShowCompleted}
+              className={`px-9 py-4 border-[#D1D5DB] border-1  text-gray duration-150   rounded-lg  flex-grow ${
+                showCompleted
+                  ? "border-primary-indigo bg-primary-indigo text-white"
+                  : "hover:text-primary-indigo hover:bg-[#E0E7FF] hover:border-[#E0E7FF]"
+              }`}
+            >
+              Completed
+            </button>
           </div>
+          {/* </div> */}
         </div>
         <div id="list" className="flex flex-col flex-wrap">
-          {reminders.map((reminder) => {
+          {reminders.length === 0 && <NoReminders />}
+          {(showCompleted
+            ? // Show only completed reminders
+              reminders.filter(
+                (reminder) => new Date(reminder.date) < new Date()
+              )
+            : // Show only upcoming (not completed) reminders
+              reminders.filter(
+                (reminder) => new Date(reminder.date) >= new Date()
+              )
+          ).map((reminder) => {
             const newDate = new Date(reminder.date);
             const createdAt = new Date(reminder.createdAt);
             const updatedAt = new Date(reminder.updatedAt);
             return (
               <ListItem
+                key={reminder.id}
                 id={reminder.id}
                 title={reminder.title}
                 description={reminder.description}
@@ -96,7 +126,12 @@ export default function Reminders() {
             }}
           />
         )}
-        <div id="pagination" className="flex flex-row justify-between">
+        <div
+          id="pagination"
+          className={`flex flex-row justify-between ${
+            reminders.length === 0 ? "hidden" : ""
+          } `}
+        >
           <button
             onClick={() => {
               setPageParams({ page: pageNo - 1 });

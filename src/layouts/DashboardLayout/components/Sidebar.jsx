@@ -57,15 +57,15 @@ export default function Sidebar() {
             <NavButton title="New Reminder" link="/dashboard/new-reminder">
               <BellPlus />
             </NavButton>
-            <NavButton title="Your Profile" link="/">
-              <User />
-            </NavButton>
           </div>
         </div>
-        <div id="lower" className="border-t-[1px] border-[#eaf2ff10] text-lg">
+        <div
+          id="lower"
+          className="border-t-[1px] border-[#eaf2ff10] text-lg flex flex-col mb-2 px-[26px]"
+        >
           <button
             onClick={handleLogout}
-            className="flex flex-row items-center gap-[15px] pt-5 pb-[23px] px-9 hover:text-primary-indigo duration-150"
+            className="flex flex-row items-center text-lg gap-[18px] px-4 py-3.5 rounded-[7px] cursor-pointer text-gray hover:bg-[#E0E7FF] hover:text-primary-indigo duration-150 flex-grow"
           >
             <LogOut />
             <span>Logout</span>

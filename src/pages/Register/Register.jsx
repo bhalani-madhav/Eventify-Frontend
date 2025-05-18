@@ -56,6 +56,11 @@ export default function Register() {
           hideProgressBar: false,
           autoClose: 2000,
         });
+      } else if (err.response && err.response.status === 400) {
+        toast.error(err.response.data.error, {
+          hideProgressBar: false,
+          autoClose: 2000,
+        });
       } else {
         console.log("ERROR WHILE SIGNING UP", err);
         toast.error("Something went wrong!!", {
@@ -111,6 +116,10 @@ export default function Register() {
                   placeholder="First Name"
                   pattern="^[A-Za-z]+$"
                   required
+                  onInvalid={(e) =>
+                    e.target.setCustomValidity("First Name cannot be empty!!")
+                  }
+                  onInput={(e) => e.target.setCustomValidity("")}
                   title="First name should only contain letters."
                   className="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
                 />
@@ -131,7 +140,11 @@ export default function Register() {
                   value={formData.lastName}
                   onChange={handleChange}
                   required
-                  title="First name should only contain letters."
+                  onInvalid={(e) =>
+                    e.target.setCustomValidity("Last Name cannot be empty!!")
+                  }
+                  onInput={(e) => e.target.setCustomValidity("")}
+                  title="Last name should only contain letters."
                   className="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
                 />
               </div>
@@ -151,6 +164,10 @@ export default function Register() {
                 name="email"
                 placeholder="you@example.com"
                 required
+                onInvalid={(e) =>
+                  e.target.setCustomValidity("Email cannot be empty!!")
+                }
+                onInput={(e) => e.target.setCustomValidity("")}
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 title="Please enter a valid email address"
                 className="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
@@ -174,6 +191,10 @@ export default function Register() {
                 required
                 placeholder="Create a new password"
                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                onInvalid={(e) =>
+                  e.target.setCustomValidity("Password cannot be empty!!")
+                }
+                onInput={(e) => e.target.setCustomValidity("")}
                 title="Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
                 className="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"
               />
@@ -193,6 +214,10 @@ export default function Register() {
                 minLength={8}
                 name="confirmPassword"
                 required
+                onInvalid={(e) =>
+                  e.target.setCustomValidity("Password cannot be empty!!")
+                }
+                onInput={(e) => e.target.setCustomValidity("")}
                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                 title="Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
                 placeholder="Enter the same password"

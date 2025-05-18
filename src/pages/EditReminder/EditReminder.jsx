@@ -3,6 +3,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import { fetchReminderById } from "../../services/ReminderServices";
 import { toast } from "react-toastify";
 import axios from "axios";
+import LoaderIcon from "../LoaderIcon";
+import ServerError from "../Errors/ServerError";
 
 export default function EditReminder() {
   const navigate = useNavigate();
@@ -84,8 +86,8 @@ export default function EditReminder() {
     }
   };
 
-  if (loading) return <h1>Loading...</h1>;
-  if (error) return <h1>{error}</h1>;
+  if (loading) return <LoaderIcon />;
+  if (error) return <ServerError />;
   return (
     <>
       <div className="flex items-center justify-center min-h-screen p-12">

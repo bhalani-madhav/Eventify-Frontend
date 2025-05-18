@@ -98,6 +98,10 @@ export default function SignIn() {
                 ref={email}
                 id="email"
                 required
+                onInvalid={(e) =>
+                  e.target.setCustomValidity("Email cannot be empty!!")
+                }
+                onInput={(e) => e.target.setCustomValidity("")}
                 pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$"
                 title="Please enter a valid email address"
                 placeholder="you@example.com"
@@ -116,6 +120,10 @@ export default function SignIn() {
                 id="password"
                 required
                 ref={password}
+                onInvalid={(e) =>
+                  e.target.setCustomValidity("Password cannot be empty!!")
+                }
+                onInput={(e) => e.target.setCustomValidity("")}
                 name="password"
                 placeholder="Your password here"
                 className="bg-white border-1 placeholder:text-xs  border-[#D1D5DB] text-gray-900 text-sm rounded-lg focus:border-primary-indigo focus:outline-none focus:border-2  focus:ring-primary-indigo  block w-full p-2.5"

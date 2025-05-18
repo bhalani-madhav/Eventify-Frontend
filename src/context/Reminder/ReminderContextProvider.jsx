@@ -5,6 +5,11 @@ export default function ReminderContextProvider({ children }) {
   const [showDelete, setShowDelete] = useState(false);
   const [selectedReminder, setSelectedReminder] = useState(null); // Track which reminder to delete
 
+  const [showCompleted, setShowCompleted] = useState(false);
+
+  const handleShowCompleted = () => setShowCompleted(true);
+  const handleShowAll = () => setShowCompleted(false);
+
   // Handler to close modal
   const handleCloseModal = () => {
     setShowDelete(false);
@@ -18,6 +23,9 @@ export default function ReminderContextProvider({ children }) {
         setShowDelete,
         selectedReminder,
         setSelectedReminder,
+        showCompleted,
+        handleShowAll,
+        handleShowCompleted
       }}
     >
       {children}

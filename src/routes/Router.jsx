@@ -8,8 +8,13 @@ import Reminders from "../pages/Reminders/Reminders";
 import NewReminder from "../pages/NewReminder/NewReminder";
 import EditReminder from "../pages/EditReminder/EditReminder";
 import ProtectedRoute from "./ProtectedRoute";
+import NotFound from "../pages/Errors/NotFound";
 
 export const Routes = createBrowserRouter([
+  {
+    path: "*",
+    element: <NotFound />,
+  },
   {
     path: "/",
     element: <LandingLayout />,
