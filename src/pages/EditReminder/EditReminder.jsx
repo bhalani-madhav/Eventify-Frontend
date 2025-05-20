@@ -90,11 +90,11 @@ export default function EditReminder() {
   if (error) return <ServerError />;
   return (
     <>
-      <div className="flex items-center justify-center min-h-screen p-12">
+      <div className="flex items-center justify-center min-h-screen p-4 sm:p-6 md:p-8 lg:p-12">
         <div className="mx-auto w-full max-w-[550px]">
           <form
             onSubmit={handleEditReminder}
-            className="rounded-md shadow-md p-5 text-subheading-gray"
+            className="rounded-md shadow-md p-3 sm:p-4 md:p-5 text-subheading-gray"
           >
             <h1 className="mb-5 text-center text-2xl font-bold text-gray">
               Edit Reminder

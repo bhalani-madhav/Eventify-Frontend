@@ -68,11 +68,11 @@ export default function NewReminder() {
 
   return (
     <>
-      <div class="flex items-center justify-center min-h-screen p-12">
+      <div class="flex items-center justify-center min-h-screen p-4 sm:p-6 md:p-8 lg:p-12">
         <div class="mx-auto w-full max-w-[550px]">
           <form
             onSubmit={handleAddReminder}
-            className="rounded-md shadow-md p-5 text-subheading-gray"
+            className="rounded-md shadow-md p-3 sm:p-4 md:p-5 text-subheading-gray"
           >
             <h1 class="mb-5 text-center text-2xl font-bold text-gray">
               New Reminder

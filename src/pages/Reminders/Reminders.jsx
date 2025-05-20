@@ -44,7 +44,7 @@ export default function Reminders() {
 
   return (
     <>
-      <div className="flex flex-col flex-wrap py-10 px-14 text-gray gap-7">
+      <div className="flex flex-col flex-wrap py-10 px-4 sm:px-6 md:px-10 lg:px-14 text-gray gap-7">
         <div id="first" className="flex-grow flex flex-col gap-9 flex-wrap">
           <div className="flex-grow">
             <span className="font-bold text-3xl">Your Reminders</span>
@@ -57,7 +57,7 @@ export default function Reminders() {
           >
             <button
               onClick={handleShowAll}
-              className={`px-9 py-4 border-[#D1D5DB] border-1  text-gray duration-150   rounded-lg  flex-grow ${
+              className={`px-4 py-2 sm:px-6 md:px-9 sm:py-3 md:py-4 border-[#D1D5DB] border-1  text-gray duration-150   rounded-lg  flex-grow ${
                 !showCompleted
                   ? "border-primary-indigo bg-primary-indigo text-white"
                   : "hover:text-primary-indigo hover:bg-[#E0E7FF] hover:border-[#E0E7FF]"
@@ -65,12 +65,12 @@ export default function Reminders() {
             >
               All Reminders
             </button>
-            {/* <button className="px-9 py-4 border-[#D1D5DB] border-1  text-gray duration-150  hover:text-primary-indigo hover:bg-[#E0E7FF] hover:border-[#E0E7FF] rounded-lg  flex-grow">
+            {/* <button className="px-4 py-2 sm:px-6 md:px-9 sm:py-3 md:py-4 border-[#D1D5DB] border-1  text-gray duration-150  hover:text-primary-indigo hover:bg-[#E0E7FF] hover:border-[#E0E7FF] rounded-lg  flex-grow">
                 All Reminders
               </button> */}
             <button
               onClick={handleShowCompleted}
-              className={`px-9 py-4 border-[#D1D5DB] border-1  text-gray duration-150   rounded-lg  flex-grow ${
+              className={`px-4 py-2 sm:px-6 md:px-9 sm:py-3 md:py-4 border-[#D1D5DB] border-1  text-gray duration-150   rounded-lg  flex-grow ${
                 showCompleted
                   ? "border-primary-indigo bg-primary-indigo text-white"
                   : "hover:text-primary-indigo hover:bg-[#E0E7FF] hover:border-[#E0E7FF]"
@@ -136,7 +136,7 @@ export default function Reminders() {
             onClick={() => {
               setPageParams({ page: pageNo - 1 });
             }}
-            className={`disabled:cursor-not-allowed px-9 py-4 border-[#E0E7FF] border-1  text-primary-indigo duration-150 max-w-[150px] hover:bg-primary-indigo  hover:text-white bg-[#E0E7FF] hover:border-primary-indigo rounded-lg  flex-grow`}
+            className={`disabled:cursor-not-allowed px-4 py-2 sm:px-6 md:px-9 sm:py-3 md:py-4 border-[#E0E7FF] border-1  text-primary-indigo duration-150 hover:bg-primary-indigo  hover:text-white bg-[#E0E7FF] hover:border-primary-indigo rounded-lg  flex-grow`}
             disabled={pageNo === 1}
           >
             Previous
@@ -145,7 +145,7 @@ export default function Reminders() {
             onClick={() => {
               setPageParams({ page: pageNo + 1 });
             }}
-            className={`disabled:cursor-not-allowed px-9 py-4 border-[#E0E7FF] border-1  text-primary-indigo duration-150 max-w-[150px] hover:bg-primary-indigo  hover:text-white bg-[#E0E7FF] hover:border-primary-indigo rounded-lg  flex-grow `}
+            className={`disabled:cursor-not-allowed px-4 py-2 sm:px-6 md:px-9 sm:py-3 md:py-4 border-[#E0E7FF] border-1  text-primary-indigo duration-150 hover:bg-primary-indigo  hover:text-white bg-[#E0E7FF] hover:border-primary-indigo rounded-lg  flex-grow`}
             disabled={pageNo === maxPage}
           >
             Next

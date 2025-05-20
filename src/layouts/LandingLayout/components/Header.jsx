@@ -6,19 +6,19 @@ export default function Header() {
     <>
       <div
         id="header"
-        className="flex flex-row w-[100vw] justify-between px-8 py-3 shadow-lg items-center sticky top-0"
+        className="flex flex-row flex-wrap sm:justify-between justify-center gap-y-2 w-[100vw] px-4 sm:px-8 py-3 shadow-lg items-center sticky top-0 bg-white"
       >
         <div id="logo">
           <NavLink to="/">
           <img src="/logo.svg" alt="" />
           </NavLink>
         </div>
-        <div id="header-buttons" className="flex flex-row gap-2.5 items-center">
+        <div id="header-buttons" className="flex flex-row flex-wrap justify-center gap-2.5 items-center">
           <NavLink to="/sign-in">
-          <button className="text-primary-indigo">Sign In</button>
+          <button className="text-primary-indigo px-4 py-2">Sign In</button>
           </NavLink>
           <NavLink to="/register">
-            <button className="bg-primary-indigo py-2 px-7 rounded-lg text-white border-1 border-primary-indigo hover:bg-white hover:text-primary-indigo duration-150 ">
+            <button className="bg-primary-indigo py-2 px-4 sm:px-7 rounded-lg text-white border-1 border-primary-indigo hover:bg-white hover:text-primary-indigo duration-150 ">
               Register
             </button>
           </NavLink>

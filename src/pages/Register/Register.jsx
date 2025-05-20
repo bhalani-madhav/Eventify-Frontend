@@ -73,7 +73,7 @@ export default function Register() {
 
   return (
     <>
-      <div className="bg-white m-auto shadow-md rounded-lg p-10 flex flex-col gap-5 mt-3">
+      <div className="bg-white m-auto shadow-md rounded-lg p-4 sm:p-6 md:p-10 flex flex-col gap-5 mt-3">
         <div id="welcome" className="flex flex-col gap-2 flex-grow">
           <img
             src="/logo.svg
