@@ -8,6 +8,11 @@ import ReminderContext from "../../context/Reminder/ReminderContext";
 import LoaderIcon from "../LoaderIcon";
 import NoReminders from "../Errors/NoReminders";
 import ServerError from "../Errors/ServerError";
+import UserContext from "../../context/User/UserContext";
+import { toast } from "react-toastify";
+import { BellRing } from "lucide-react";
+import notifyMe from "../../utils/notifyMe";
+import scheduleReminder from "../../utils/scheduleReminder";
 
 export default function Reminders() {
   const [pageParams, setPageParams] = useSearchParams();
@@ -15,6 +20,58 @@ export default function Reminders() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [maxPage, setMaxPage] = useState(1);
+
+  const { userResponded, setUserResponded } = useContext(UserContext);
+
+  const enableNotifications = async () => {
+    toast.dismiss();
+    await notifyMe().then(() => {
+      setUserResponded(true);
+    });
+  };
+  const closeToast = () => {
+    setUserResponded(true);
+    toast.dismiss();
+  };
+
+  useEffect(() => {
+    if (!userResponded && !(Notification.permission === "granted")) {
+      toast(
+        <div className="flex flex-col gap-2.5">
+          <div className="flex flex-row text-primary-indigo items-center gap-1.5">
+            <span>
+              <BellRing />
+            </span>
+            <span>Do you want to enable notifications ?</span>
+          </div>
+          <div className="flex flex-row gap-2.5">
+            <button
+              className="flex-grow rounded-md bg-primary-indigo text-white duration-150"
+              onClick={enableNotifications}
+            >
+              Yes
+            </button>
+            <button
+              className="flex-grow rounded-md bg-primary-indigo text-white duration-150"
+              onClick={closeToast}
+            >
+              No
+            </button>
+          </div>
+        </div>,
+        {
+          closeButton: false,
+          autoClose: false,
+        }
+      );
+    }
+    if (Notification.permission === "granted") {
+      toast.success("Notfications are enabled!!", {
+        hideProgressBar: false,
+        autoClose: 2000,
+      });
+    }
+  }, []);
 
   const {
     showDelete,
@@ -81,8 +138,14 @@ export default function Reminders() {
           </div>
           {/* </div> */}
         </div>
+
         <div id="list" className="flex flex-col flex-wrap">
-          {reminders.length === 0 && <NoReminders />}
+          {reminders.length === 0 && (
+            <NoReminders message="Create your first reminder!!" />
+          )}
+          {/* {reminders.length !==0 && new Date(reminders[0].date) < new Date() && (
+                <NoReminders message="No active reminders!!" />
+              )} */}
           {(showCompleted
             ? // Show only completed reminders
               reminders.filter(

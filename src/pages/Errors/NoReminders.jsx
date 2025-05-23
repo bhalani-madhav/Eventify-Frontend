@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function NoReminders() {
+export default function NoReminders({message}) {
   const navigate = useNavigate();
   return (
     <div className="flex flex-col items-center justify-center py-10">
@@ -10,7 +10,7 @@ export default function NoReminders() {
         className="px-6 py-3 rounded-lg text-white font-medium bg-primary-indigo hover:bg-indigo-700"
         onClick={() => navigate("/dashboard/new-reminder")}
       >
-        Add New Reminder
+        {message}
       </button>
     </div>
   );

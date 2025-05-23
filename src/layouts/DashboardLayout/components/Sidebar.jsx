@@ -10,6 +10,8 @@ export default function Sidebar() {
   const { username, setIsLoggedIn } = useContext(UserContext);
   const navigate = useNavigate();
 
+
+  
   const handleLogout = async () => {
     try {
       const response = await axios.post(

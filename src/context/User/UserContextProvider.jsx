@@ -7,6 +7,8 @@ export default function UserContextProvider({ children }) {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
 
+  const [userResponded, setUserResponded] = useState(false);
+
   useEffect(() => {
     async function verify() {
       try {
@@ -35,7 +37,7 @@ export default function UserContextProvider({ children }) {
 
   return (
     <UserContext.Provider
-      value={{ username, setUsername, setIsLoggedIn, isLoggedIn }}
+      value={{ username, setUsername, setIsLoggedIn, isLoggedIn, userResponded, setUserResponded }}
     >
       {children}
     </UserContext.Provider>

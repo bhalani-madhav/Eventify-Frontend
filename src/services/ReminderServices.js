@@ -1,5 +1,6 @@
 import axios from "axios";
 import dateTimeFormatter from "../utils/dateTimeFormatter";
+import scheduleReminder from "../utils/scheduleReminder";
 
 //function to handle api call to fetch all reminders
 export const fetchReminders = async (
@@ -23,6 +24,10 @@ export const fetchReminders = async (
       : response.data.data.reminders || [];
     setReminders(fetchedReminders);
     setMaxPage(response.data.maxPage);
+    fetchedReminders.forEach((reminder) => {
+      scheduleReminder(reminder.date, reminder.title);
+    });
+   
   } catch (err) {
     setError(err.message || "Failed to fetch products");
   } finally {
