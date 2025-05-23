@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useContext } from "react";
 import { useSearchParams } from "react-router-dom";
 import SearchInput from "./components/SearchInput";
+import registerServiceWorker from "../../services/RegisterService";
 import ListItem from "./components/ListItem";
 import { fetchReminders } from "../../services/ReminderServices";
 import DeleteModal from "./components/DeleteModal";
@@ -25,6 +26,7 @@ export default function Reminders() {
 
   const enableNotifications = async () => {
     toast.dismiss();
+    await registerServiceWorker();
     await notifyMe().then(() => {
       setUserResponded(true);
     });
